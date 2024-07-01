@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hello, World with LangChain</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <h1>Simple test with LangChain</h1>
+    <form id="promptForm">
+        <input type="text" id="prompt" name="prompt" placeholder="Enter your prompt" required>
+        <button type="submit">Generate</button>
+    </form>
+    <div id="result"></div>
+
+    <script>
+        $(document).ready(function() {
+            $('#promptForm').on('submit', function(event) {
+                event.preventDefault();
+                $.ajax({
+                    url: '/generate',
+                    type: 'POST',
+                    data: { prompt: $('#prompt').val() },
+                    success: function(response) {
+                        $('#result').html('<p>' + response.response + '</p>');
+                    },
+                    error: function(response) {
+                        $('#result').html('<p>Error: ' + response.responseJSON.error + '</p>');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
